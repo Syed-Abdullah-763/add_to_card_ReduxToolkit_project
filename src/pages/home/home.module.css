@@ -1,0 +1,26 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+main {
+  width: 100%;
+  min-height: 700%;
+}
+
+main h1 {
+  text-align: center;
+  color: #0f7ab8;
+  margin: 20px;
+}
+
+.cardParent {
+  min-height: 500px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
