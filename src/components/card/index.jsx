@@ -9,6 +9,7 @@ const ProductCard = ({
   description,
   price,
   onClick,
+  btnValue,
   themeColor = "#0f7ab8",
 }) => {
   return (
@@ -27,7 +28,7 @@ const ProductCard = ({
           <div className={styles.actions}>
             <button className={styles.addToCart} onClick={onClick}>
               <FaCartPlus className={styles.icon} />
-              <span>Add to Cart</span>
+              <span>{btnValue ? `${btnValue}` : "Add to Cart"}</span>
             </button>
 
             <button className={styles.buyNow}>Buy Now</button>

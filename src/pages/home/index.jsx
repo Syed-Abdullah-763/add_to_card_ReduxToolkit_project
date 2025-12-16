@@ -1,21 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/navbar";
 import styles from "./home.module.css";
 import ProductCard from "../../components/card";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setAddToCard, setProduct } from "../../redux/slices/product";
+import { setAddToCard } from "../../redux/slices/product";
+import { fetchProductThunk } from "../../redux/thunks/product";
 
 const HomePage = () => {
   const dispatch = useDispatch();
 
-  const { products } = useSelector((store) => store.productReducer);
+  const { products, loading, error } = useSelector(
+    (store) => store.productReducer
+  );
 
   useEffect(() => {
     (async () => {
-      const response = await axios.get("https://fakestoreapi.com/products");
-
-      dispatch(setProduct(response.data));
+      dispatch(fetchProductThunk());
     })();
   }, []);
 
@@ -27,22 +27,28 @@ const HomePage = () => {
         <main>
           <h1>Products</h1>
 
-          <div className={styles.cardParent}>
-            {products.map((product) => {
-              return (
-                <ProductCard
-                  image={product.image}
-                  title={product.title}
-                  description={product.description}
-                  price={product.price}
-                  key={product.id}
-                  onClick={() => {
-                    dispatch(setAddToCard(product));
-                  }}
-                />
-              );
-            })}
-          </div>
+          {loading && <h3>Loading...</h3>}
+
+          {error ? (
+            <h4>{error}. Please check your network</h4>
+          ) : (
+            <div className={styles.cardParent}>
+              {products.map((product) => {
+                return (
+                  <ProductCard
+                    image={product.image}
+                    title={product.title}
+                    description={product.description}
+                    price={product.price}
+                    key={product.id}
+                    onClick={() => {
+                      dispatch(setAddToCard(product));
+                    }}
+                  />
+                );
+              })}
+            </div>
+          )}
         </main>
       </div>
     </>
